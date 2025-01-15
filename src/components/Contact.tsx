@@ -1,32 +1,42 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Mail, MapPin, Phone } from 'lucide-react';
-import emailjs from 'emailjs-com';
-
-const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault(); // Prevent default form submission
-
-  // Use the emailjs.sendForm method to send the form data
-  emailjs
-    .sendForm('service_janbhlb', 'template_16gwt8g', e.target as HTMLFormElement, 'your_user_id')
-    .then(
-      (result) => {
-        console.log(result.text); // Success message
-        alert('Message sent successfully!');
-      },
-      (error) => {
-        console.log(error.text); // Error handling
-        alert('Oops! Something went wrong. Please try again.');
-      }
-    );
-};
-
+import emailjs from '@emailjs/browser';
+import { useRef, useState } from 'react';
 
 export const Contact = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1
   });
+
+  const formRef = useRef<HTMLFormElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formRef.current) return;
+
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      await emailjs.sendForm(
+        'service_janbhlb',
+        'template_16gwt8g',
+        formRef.current,
+        'mq7qJM50nM8L5FSCH'
+      );
+      setSubmitStatus('success');
+      formRef.current.reset();
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section id="contact" className="py-20">
@@ -57,7 +67,7 @@ export const Contact = () => {
               </div>
               <div>
                 <h3 className="text-xl font-semibold mb-2">Location</h3>
-                <p className="text-gray-600 dark:text-gray-300">San Francisco, CA</p>
+                <p className="text-gray-600 dark:text-gray-300">Lagos, Nigeria</p>
               </div>
             </div>
 
@@ -67,8 +77,8 @@ export const Contact = () => {
               </div>
               <div>
                 <h3 className="text-xl font-semibold mb-2">Email</h3>
-                <a href="mailto:contact@example.com" className="text-blue-600 dark:text-blue-400 hover:underline">
-                  contact@example.com
+                <a href="mailto:kalejaiyemayowa3@gmail.com" className="text-blue-600 dark:text-blue-400 hover:underline">
+                  kalejaiyemayowa3@gmail.com
                 </a>
               </div>
             </div>
@@ -79,67 +89,78 @@ export const Contact = () => {
               </div>
               <div>
                 <h3 className="text-xl font-semibold mb-2">Phone</h3>
-                <a href="tel:+1234567890" className="text-blue-600 dark:text-blue-400 hover:underline">
-                  +1 (234) 567-890
+                <a href="tel:+2349153818344" className="text-blue-600 dark:text-blue-400 hover:underline">
+                  +(234)-0-91-538-183-44
                 </a>
               </div>
             </div>
           </motion.div>
 
           <motion.form
-              initial={{ opacity: 0, x: 20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6 }}
-              className="space-y-6"
-              onSubmit={sendEmail} // Use the sendEmail function here
+            ref={formRef}
+            initial={{ opacity: 0, x: 20 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="space-y-6"
+            onSubmit={handleSubmit}
+          >
+            <div>
+              <label htmlFor="name" for="from_name" className="block text-sm font-medium mb-2">
+                Name
+              </label>
+              <input
+                type="text"
+                name="from_name"
+                id="from_name"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-colors duration-200"
+                placeholder="Your name"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                name="user_email"
+                id="email"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-colors duration-200"
+                placeholder="Your email"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="message" className="block text-sm font-medium mb-2">
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows={4}
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-colors duration-200"
+                placeholder="Your message"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 disabled:opacity-50"
             >
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name" // Add the name attribute for form data
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-colors duration-200"
-                  placeholder="Your name"
-                />
-              </div>
+              {isSubmitting ? 'Sending...' : 'Send Message'}
+            </button>
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email" // Add the name attribute for form data
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-colors duration-200"
-                  placeholder="Your email"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message" // Add the name attribute for form data
-                  rows={4}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-colors duration-200"
-                  placeholder="Your message"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
-              >
-                Send Message
-              </button>
-            </motion.form>
-
+            {submitStatus === 'success' && (
+              <p className="text-green-600 text-center">Message sent successfully!</p>
+            )}
+            {submitStatus === 'error' && (
+              <p className="text-red-600 text-center">Failed to send message. Please try again.</p>
+            )}
+          </motion.form>
         </div>
       </div>
     </section>

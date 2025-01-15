@@ -4,32 +4,25 @@ import { Award, BookOpen, Briefcase, GraduationCap } from 'lucide-react';
 
 const timeline = [
   {
-    year: "2023",
-    title: "Senior Full-Stack Developer",
-    company: "Tech Innovators Inc.",
-    description: "Leading development of enterprise-scale applications and mentoring junior developers.",
+    year: "2025",
+    title: "Java Enthusiast",
+    company: "Self-Learning",
+    description: "Diving into Java to expand my programming skill set and build robust, platform-independent applications.",
     icon: <Briefcase className="w-6 h-6" />
   },
   {
-    year: "2021",
-    title: "Full-Stack Developer",
-    company: "Digital Solutions Ltd.",
-    description: "Developed and maintained multiple client projects using modern web technologies.",
+    year: "2024",
+    title: "C Programmer & Developer",
+    company: "Solo Developer & Mentor",
+    description: "Started learning C programming, building a strong foundation in low-level programming. Teaching Django to beginners and guiding them through practical projects.",
     icon: <BookOpen className="w-6 h-6" />
   },
   {
-    year: "2020",
-    title: "Software Engineering Degree",
-    company: "Tech University",
-    description: "Graduated with honors in Computer Science and Software Engineering.",
+    year: "2023",
+    title: "First-Year Software Engineering Student",
+    company: "MIVA Open University",
+    description: "Began programming journey in BSc Software Engineering. Self-taught full-stack development, mastering Python, Django, and JavaScript while working on various freelance projects.",
     icon: <GraduationCap className="w-6 h-6" />
-  },
-  {
-    year: "2019",
-    title: "Junior Developer",
-    company: "StartUp Hub",
-    description: "Started my journey in web development, working on innovative projects.",
-    icon: <Award className="w-6 h-6" />
   }
 ];
 
@@ -63,15 +56,17 @@ export const About = () => {
             className="space-y-6"
           >
             <h3 className="text-2xl font-bold mb-4">My Journey</h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              With over 5 years of experience in web development, I've had the opportunity to work on a wide range of projects, from small business websites to large-scale enterprise applications.
-            </p>
-            <p className="text-gray-600 dark:text-gray-300">
-              I'm passionate about creating intuitive user experiences and writing clean, maintainable code. My expertise spans both frontend and backend development, with a particular focus on React and Node.js ecosystems.
-            </p>
-            <p className="text-gray-600 dark:text-gray-300">
-              When I'm not coding, you can find me contributing to open-source projects, writing technical blog posts, or learning new technologies to stay at the forefront of web development.
-            </p>
+            <div className="space-y-4">
+              <p className="text-gray-600 dark:text-gray-300">
+                As a passionate and ambitious software developer, I'm on a mission to become the best in the world. My journey started with a strong foundation in programming, and I've been steadily building my expertise in web development, particularly in Python, Django, and JavaScript.
+              </p>
+              <p className="text-gray-600 dark:text-gray-300">
+                I specialize in creating intuitive, user-friendly applications and am currently honing my skills in advanced technologies like Django Rest Framework, React.js, and MySQL. My work has included building e-commerce platforms, crafting innovative CRUD APIs, and designing interactive, responsive web applications.
+              </p>
+              <p className="text-gray-600 dark:text-gray-300">
+                Beyond coding, I love teaching programming concepts, mentoring beginners, and collaborating on exciting projects. Whether it's writing about technical challenges or leading a team, I aim to inspire others and push boundaries in the tech space.
+              </p>
+            </div>
           </motion.div>
 
           <motion.div
