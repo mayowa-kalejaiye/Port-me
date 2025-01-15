@@ -60,7 +60,7 @@ export const Hero = () => {
           variants={itemVariants}
           className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12"
         >
-          Aspiring Full-Stack Developer crafting beautiful digital experiences
+          Junior Developer crafting beautiful digital experiences
         </motion.p>
 
         <motion.div 

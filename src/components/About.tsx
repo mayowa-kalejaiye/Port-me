@@ -43,9 +43,12 @@ export const About = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-bold mb-4">About Me</h2>
-          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            A passionate developer with a love for creating beautiful and functional web applications
-          </p>
+          <p className="text-gray-600 dark:text-gray-300">
+          Beyond coding, I love teaching programming concepts, mentoring beginners, and collaborating on exciting projects. Whether it's writing about technical challenges or leading a team, I aim to inspire others and push boundaries in the tech space.
+        </p>
+        <p className="text-gray-600 dark:text-gray-300">
+          Junior Developer (Full Stack - Backend Heavy) crafting beautiful digital experiences.
+        </p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
